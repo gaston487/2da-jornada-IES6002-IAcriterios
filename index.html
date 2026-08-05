@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA en Artes Visuales — Escuela Provincial de Bellas Artes Tomás Cabrera</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #1a1a2e;
+            --ink-light: #2d2d44;
+            --accent: #c9a227;
+            --accent-soft: #e8d5a3;
+            --paper: #faf8f3;
+            --paper-warm: #f5f0e8;
+            --text: #333344;
+            --text-light: #666677;
+            --border: #e0d8c8;
+            --shadow: rgba(26, 26, 46, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--paper);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* ── Header ── */
+        header {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(201, 162, 39, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(201, 162, 39, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .institution {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent-soft);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            line-height: 1.15;
+            max-width: 800px;
+            margin: 0 auto 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: rgba(250, 248, 243, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+        }
+
+        .meta {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: rgba(250, 248, 243, 0.5);
+            letter-spacing: 0.1em;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Main Content ── */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        section {
+            margin-bottom: 3.5rem;
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--ink-light);
+            margin: 1.8rem 0 0.6rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        /* ── Intro Block ── */
+        .intro-block {
+            background: var(--paper-warm);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--ink-light);
+        }
+
+        /* ── Tool Cards ── */
+        .tools-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tool-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px var(--shadow);
+            border-color: var(--accent-soft);
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .tool-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .tool-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .tool-company {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.15rem;
+        }
+
+        .tool-desc {
+            font-size: 0.95rem;
+            color: var(--text);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .tool-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--ink);
+            color: var(--paper);
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .tool-link:hover {
+            background: var(--accent);
+            color: var(--ink);
+        }
+
+        .tool-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ── Tipología List ── */
+        .tipo-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tipo-list li {
+            padding: 1rem 1.2rem;
+            margin-bottom: 0.6rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .tipo-list li::before {
+            content: attr(data-num);
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            color: var(--ink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tipo-list strong {
+            color: var(--ink);
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        .tipo-list span {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* ── Ethics Box ── */
+        .ethics-box {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+        }
+
+        .ethics-box h3 {
+            color: var(--accent);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .ethics-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ethics-box li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+            color: rgba(250, 248, 243, 0.85);
+        }
+
+        .ethics-box li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        footer p {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        footer .school-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--ink);
+            margin-bottom: 0.3rem;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            header {
+                padding: 3rem 1.5rem 2rem;
+            }
+            main {
+                padding: 2rem 1.2rem;
+            }
+            .tool-card {
+                padding: 1.2rem;
+            }
+            .ethics-box {
+                padding: 1.5rem;
+            }
+        }
+
+        /* ── Print ── */
+        @media print {
+            header {
+                background: white !important;
+                color: black !important;
+                padding: 2rem 1rem;
+            }
+            header .institution, header .subtitle, header .meta {
+                color: #333 !important;
+            }
+            .tool-link {
+                background: #eee !important;
+                color: #333 !important;
+            }
+            .ethics-box {
+                background: #f5f5f5 !important;
+                color: #333 !important;
+            }
+            .ethics-box h3, .ethics-box li {
+                color: #333 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="institution">Escuela Provincial de Bellas Artes Tomás Cabrera — IES 6002</div>
+    <h1>La Inteligencia Artificial:<br><em>Tipología y su Uso en Artes Visuales</em></h1>
+    <p class="subtitle">Jornada Pedagógica Institucional — 2do cuatrimestre 2026<br><strong>Lic. Gastón Iñiguez</strong></p>
+    <div class="meta">Agosto 2026</div>
+</header>
+
+<main>
+
+    <!-- INTRODUCCIÓN -->
+    <section>
+        <h2>1. Introducción</h2>
+        <p>
+            La inteligencia artificial (IA) ha dejado de ser una herramienta exclusiva del ámbito tecnológico para convertirse en un recurso creativo cada vez más presente en las prácticas artísticas contemporáneas. En el campo de las Artes Visuales y el Diseño Gráfico, la IA no reemplaza la sensibilidad del artista, sino que amplía sus posibilidades expresivas, acelera procesos técnicos y abre nuevos lenguajes visuales.
+        </p>
+        <div class="intro-block">
+            Este informe tiene como propósito ofrecer un panorama sintético de las principales herramientas de IA disponibles en 2026, clasificadas según su función y aplicabilidad en el contexto de la enseñanza artística de nivel terciario.
+        </div>
+    </section>
+
+    <!-- TIPOLOGÍA -->
+    <section>
+        <h2>2. Tipología de IA en Artes Visuales</h2>
+        <p>
+            Las herramientas de inteligencia artificial aplicadas a las artes pueden agruparse en categorías según su función principal. Comprender esta tipología permite al docente y al estudiante elegir el recurso adecuado para cada etapa del proceso creativo.
+        </p>
+        <ul class="tipo-list">
+            <li data-num="1">
+                <strong>IA Generativa de Imagen</strong>
+                <span>Crea imágenes originales a partir de descripciones textuales (prompts). Ejemplos: Midjourney, DALL·E, Stable Diffusion, Ideogram.</span>
+            </li>
+            <li data-num="2">
+                <strong>IA Generativa de Video</strong>
+                <span>Produce secuencias audiovisuales a partir de texto o imágenes. Ejemplos: Runway, Kling, Pika Labs, Sora.</span>
+            </li>
+            <li data-num="3">
+                <strong>Asistentes de Conversación y Razonamiento</strong>
+                <span>Modelos de lenguaje amplio (LLM) que asisten en investigación, redacción, análisis crítico y resolución de problemas creativos.</span>
+            </li>
+            <li data-num="4">
+                <strong>IA de Investigación y Síntesis</strong>
+                <span>Herramientas especializadas en buscar, sintetizar y citar información académica y visual de fuentes verificables.</span>
+            </li>
+            <li data-num="5">
+                <strong>IA de Organización y Gestión del Conocimiento</strong>
+                <span>Permiten subir documentos, notas y referencias para generar resúmenes, podcasts explicativos y mapas conceptuales.</span>
+            </li>
+        </ul>
+    </section>
+
+    <!-- HERRAMIENTAS SUGERIDAS -->
+    <section>
+        <h2>3. Herramientas Sugeridas para la Enseñanza</h2>
+        <p>
+            A continuación se presentan cinco herramientas de IA seleccionadas por su accesibilidad, utilidad pedagógica y relevancia en el campo de las artes visuales y la comunicación. Todas cuentan con versiones gratuitas o de bajo costo para uso educativo.
+        </p>
+
+        <div class="tools-grid">
+
+            <!-- NotebookLM -->
+            <article class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon" style="background: #fef3c7;">📓</div>
+                    <div>
+                        <div class="tool-name">NotebookLM</div>
+                        <div class="tool-company">Google</div>
+                    </div>
+                </div>
+                <p class="tool-desc">
+                    <strong>Función:</strong> Organización y gestión del conocimiento.<br><br>
+                    Permite subir documentos, PDFs, artículos y notas de clase para que la IA genere resúmenes, responda preguntas específicas sobre el material y, desde 2025, cree <em>Audio Overviews</em> (podcasts explicativos) y <em>Video Overviews</em>. Es ideal para que los estudiantes consoliden investigaciones sobre historia del arte, teoría del diseño o referentes visuales. También permite generar mapas conceptuales y timelines interactivos a partir de los materiales cargados.
+                </p>
+                <a href="https://notebooklm.google.com" target="_blank" rel="noopener" class="tool-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    notebooklm.google.com
+                </a>
+            </article>
+
+            <!-- Kimi -->
+            <article class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon" style="background: #dbeafe;">🌙</div>
+                    <div>
+                        <div class="tool-name">Kimi</div>
+                        <div class="tool-company">Moonshot AI</div>
+                    </div>
+                </div>
+                <p class="tool-desc">
+                    <strong>Función:</strong> Asistente de conversación y razonamiento avanzado.<br><br>
+                    Desarrollado por Moonshot AI, Kimi destaca por su enorme ventana de contexto (hasta 2 millones de caracteres en versiones recientes), lo que le permite procesar documentos extensos, libros de arte completos o portfolios visuales. Su modo <em>OK Computer</em> (agente) permite crear sitios web, presentaciones y análisis visuales a partir de simples indicaciones. Es especialmente útil para brainstorming, análisis crítico de obras y redacción de textos curatoriales. La versión K3 (julio 2026) incluye razonamiento profundo y capacidades multimodales.
+                </p>
+                <a href="https://www.kimi.com" target="_blank" rel="noopener" class="tool-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    kimi.com
+                </a>
+            </article>
+
+            <!-- Perplexity -->
+            <article class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon" style="background: #ede9fe;">🔍</div>
+                    <div>
+                        <div class="tool-name">Perplexity</div>
+                        <div class="tool-company">Perplexity AI, Inc.</div>
+                    </div>
+                </div>
+                <p class="tool-desc">
+                    <strong>Función:</strong> Investigación y síntesis con fuentes verificables.<br><br>
+                    Perplexity combina un motor de búsqueda en tiempo real con un modelo de lenguaje, proporcionando respuestas con citas directas a fuentes. Es ideal para investigación académica sobre movimientos artísticos, artistas contemporáneos, técnicas de diseño o tendencias visuales. Su modo <em>Pro</em> permite búsquedas profundas y análisis comparativos. Para la enseñanza de artes visuales, resulta valioso porque enseña a los estudiantes a verificar fuentes mientras exploran temas creativos.
+                </p>
+                <a href="https://www.perplexity.ai" target="_blank" rel="noopener" class="tool-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    perplexity.ai
+                </a>
+            </article>
+
+            <!-- Claude -->
+            <article class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon" style="background: #fce7f3;">🎭</div>
+                    <div>
+                        <div class="tool-name">Claude</div>
+                        <div class="tool-company">Anthropic</div>
+                    </div>
+                </div>
+                <p class="tool-desc">
+                    <strong>Función:</strong> Asistente de conversación con énfasis ético y creativo.<br><br>
+                    Claude, desarrollado por Anthropic, se distingue por su enfoque en la seguridad y la alineación ética (Constitutional AI). Es particularmente hábil en tareas de redacción creativa, análisis de textos teóricos del arte, y generación de ideas conceptuales para proyectos visuales. Su capacidad para mantener conversaciones largas y coherentes lo hace útil como "compañero de estudio" en procesos de investigación artística. La versión Claude Fable 5 (2026) ofrece capacidades avanzadas con salvaguardas éticas robustas.
+                </p>
+                <a href="https://claude.ai" target="_blank" rel="noopener" class="tool-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    claude.ai
+                </a>
+            </article>
+
+            <!-- Qwen -->
+            <article class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon" style="background: #d1fae5;">🧠</div>
+                    <div>
+                        <div class="tool-name">Qwen</div>
+                        <div class="tool-company">Alibaba Cloud</div>
+                    </div>
+                </div>
+                <p class="tool-desc">
+                    <strong>Función:</strong> Modelo de lenguaje abierto y multimodal.<br><br>
+                    Qwen (Tongyi Qianwen) es una familia de modelos de lenguaje desarrollada por Alibaba, destacada por ser de código abierto y altamente competitiva en benchmarks internacionales. Su versión Qwen-VL permite análisis y generación de contenido visual, mientras que Qwen-Coder asiste en la programación creativa (arte generativo, visualizaciones de datos, sitios web interactivos). Para estudiantes de diseño gráfico, Qwen ofrece una alternativa accesible y transparente, con modelos que pueden ejecutarse localmente, preservando la privacidad del trabajo artístico.
+                </p>
+                <a href="https://qwen.ai" target="_blank" rel="noopener" class="tool-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    qwen.ai
+                </a>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- CONSIDERACIONES -->
+    <section>
+        <h2>4. Consideraciones Éticas y Pedagógicas</h2>
+        <p>
+            La incorporación de la IA en la enseñanza de las artes visuales exige una reflexión crítica sobre su uso. No se trata de una oposición entre "lo analógico" y "lo digital", sino de establecer una relación consciente y crítica con estas herramientas.
+        </p>
+        <div class="ethics-box">
+            <h3>Principios orientadores para el aula</h3>
+            <ul>
+                <li><strong>Transparencia:</strong> Los estudiantes deben declarar el uso de IA en sus trabajos, especificando qué herramienta utilizaron y en qué etapa del proceso.</li>
+                <li><strong>Crítica:</strong> La IA debe ser objeto de análisis, no solo de uso. Cuestionar sesgos, estéticas homogeneizadas y problemas de derechos de autor.</li>
+                <li><strong>Complementariedad:</strong> La IA es una herramienta, no un autor. El juicio estético, la sensibilidad y la intención creativa siguen siendo del artista.</li>
+                <li><strong>Privacidad:</strong> Evitar cargar en plataformas públicas obras, datos personales o material sensible de terceros sin consentimiento.</li>
+                <li><strong>Diversidad:</strong> Explorar múltiples herramientas para no depender de un único ecosistema tecnológico.</li>
+                <li><strong>Contexto histórico:</strong> Situar la IA dentro de la historia de los medios artísticos: cada nueva tecnología (fotografía, cámara digital, software) generó debates similares.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- CRITERIOS Y EVALUACIÓN -->
+    <section>
+        <h2>5. Criterios Compartidos: IA como Aliada del Pensamiento</h2>
+        <p>
+            El desafío central no es si los estudiantes usarán inteligencia artificial —lo harán—, sino <strong>cómo</strong> la usarán. Por ello, resulta imprescindible construir criterios compartidos entre docentes y estudiantes que transformen la IA de un mero atajo en una verdadera herramienta de pensamiento.
+        </p>
+
+        <h3>Del delegamiento al diálogo</h3>
+        <p>
+            Emplear la IA no debe equivaler a externalizar el juicio crítico. El estudiante que pide a un modelo que "haga su trabajo" pierde la oportunidad de desarrollar las capacidades que la formación artística exige: la observación, la argumentación estética, la toma de decisiones creativas. El docente, a su vez, no puede limitarse a prohibir o ignorar estas tecnologías; debe acompañar a los estudiantes en un uso reflexivo, mostrándoles cómo la IA puede ampliar —no reemplazar— su proceso creativo.
+        </p>
+        <p>
+            Trabajar de forma mancomunada implica que docente y estudiante negocien conjuntamente las reglas de uso: ¿en qué etapas del proyecto es válida la asistencia de IA? ¿Cómo se documenta ese uso? ¿Qué partes del trabajo deben ser enteramente humanas? Estas preguntas no tienen respuestas únicas, pero sí deben tener respuestas explícitas en cada aula.
+        </p>
+
+        <h3>Potenciar, no penalizar</h3>
+        <p>
+            Penalizar al estudiante por usar IA genera dos efectos perversos: lo empuja a ocultar su uso (fomentando la deshonestidad) o lo condena a una competencia desigual frente a quienes acceden a estas herramientas fuera del ámbito académico. La postura pedagógica más constructiva consiste en <strong>acompañar</strong>: enseñar a usar la IA con criterio, evaluar el proceso tanto como el producto, y reconocer que dominar estas herramientas es, en sí mismo, una competencia profesional del diseñador contemporáneo.
+        </p>
+        <p>
+            La experiencia de aprendizaje se potencia cuando el estudiante aprende a formular mejores preguntas, a contrastar las respuestas de la IA con sus propios conocimientos, a detectar sesgos y limitaciones, y a integrar la tecnología como un colaborador más en su taller creativo.
+        </p>
+
+        <h3>Hacia rúbricas y listas de cotejo conjuntas</h3>
+        <p>
+            Para que esta convivencia con la IA sea efectiva, los criterios de evaluación deben actualizarse. No basta con evaluar "si usó o no usó IA"; hay que evaluar <em>cómo</em> la usó, qué aportó su intervención humana, y si el resultado final refleja comprensión, criterio y originalidad.
+        </p>
+        <p>
+            Invitamos a los docentes a participar en la construcción colectiva de <strong>rúbricas y listas de cotejo</strong> que permitan una evaluación justa, transparente y eficaz en un contexto donde la inteligencia artificial forma parte del entorno de trabajo. Su experiencia y su mirada son fundamentales para diseñar instrumentos que valoren tanto el proceso como el producto, y que reconozcan la autoría humana donde realmente reside.
+        </p>
+
+        <div style="background: var(--paper-warm); border: 2px solid var(--accent); border-radius: 12px; padding: 1.8rem 2rem; margin-top: 1.5rem; text-align: center;">
+            <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--ink); margin-bottom: 0.8rem;">
+                ¿Docente? Sumá tu criterio
+            </p>
+            <p style="font-size: 0.95rem; color: var(--text-light); margin-bottom: 1.2rem; text-align: center;">
+                Completá el formulario para contribuir al diseño de rúbricas y listas de cotejo que orienten la evaluación con IA en el aula de artes visuales.
+            </p>
+            <a href="https://forms.gle/3YLpkb2QdYSgBq8v7" target="_blank" rel="noopener" class="tool-link" style="background: var(--accent); color: var(--ink); font-size: 1rem; padding: 0.8rem 1.6rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                Acceder al formulario
+            </a>
+        </div>
+    </section>
+
+    <!-- CONCLUSIÓN -->
+    <section>
+        <h2>6. Conclusión</h2>
+        <p>
+            La inteligencia artificial representa una nueva paleta en el toolkit del artista y del diseñador contemporáneo. Las herramientas presentadas en este informe —NotebookLM, Kimi, Perplexity, Claude y Qwen— ofrecen distintas aproximaciones a la investigación, la organización del conocimiento y la asistencia creativa, sin pretender reemplazar la formación artística fundamental.
+        </p>
+        <p>
+            En el contexto de la enseñanza artística de nivel terciario, estas tecnologías pueden servir como puente entre la teoría y la práctica, entre la investigación académica y la producción visual. El desafío pedagógico no es resistir el cambio tecnológico, sino formar estudiantes capaces de usar la IA con criterio, ética y creatividad.
+        </p>
+        <div class="intro-block" style="margin-top: 1.5rem;">
+            <em>"La tecnología no es buena ni mala, ni es neutral."</em> — Melvin Kranzberg<br>
+            Primera Ley de la Tecnología
+        </div>
+    </section>
+
+</main>
+
+<!-- AGRADECIMIENTO -->
+<section style="text-align: center; padding: 4rem 2rem; background: var(--ink); color: var(--paper);">
+    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 700; color: var(--accent); border: none; margin-bottom: 1rem;">¡GRACIAS!</h2>
+    <p style="font-size: 1.1rem; color: rgba(250, 248, 243, 0.7); max-width: 500px; margin: 0 auto; text-align: center;">
+        Por acompañar este espacio de reflexión y construcción colectiva sobre el futuro de la enseñanza artística.
+    </p>
+</section>
+
+<footer>
+    <p class="school-name">Escuela Provincial de Bellas Artes Tomás Cabrera — IES 6002</p>
+    <p><strong>Lic. Gastón Iñiguez</strong><br>
+    Jornada Pedagógica Institucional — 2do cuatrimestre 2026</p>
+</footer>
+
+</body>
+</html>
